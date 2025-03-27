@@ -1,15 +1,18 @@
 <?php
 function openDB()
 {
-    $servername = "localhost";
-    $username = "root"; // Ihr MySQL-Benutzername
-    $password = "12@34"; // Ihr MySQL-Passwort
-    $dbname = "todo_list"; // Der Name Ihrer Datenbank
+    $env = parse_ini_file(__DIR__ . '/../.env');
+    // var_dump($env);
 
-    // Verbindung zur Datenbank herstellen
+    $servername = $env['DB_SERVER'];
+    $username = $env['DB_USERNAME'];
+    $password = $env['DB_PASSWORD']; 
+    $dbname = $env['DB_NAME']; 
+
+    // Connect to database
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Überprüfen der Verbindung
+    // Check connection
     if ($conn->connect_error) {
         $_SESSION['error'] = "Verbindung fehlgeschlagen: " . $conn->connect_error;
         die("Verbindung fehlgeschlagen: " . $conn->connect_error);

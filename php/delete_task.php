@@ -2,14 +2,13 @@
 include('./database.php');
 session_start();
 
-// Verbindung zur Datenbank herstellen
+// Connect to database
 $conn = openDB();
 
-// Überprüfen, ob die Aufgabe-ID gesendet wurde
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $task_id = $_POST['task_id'];
 
-    // Aufgabe aus der Datenbank löschen
+    // Delete task
     $stmt = $conn->prepare("DELETE FROM tasks WHERE id = ?");
     $stmt->bind_param("i", $task_id);
 

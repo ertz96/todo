@@ -1,7 +1,7 @@
 
 const logout = () => {
     document.getElementById('logout_link').addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
+        event.preventDefault();
         fetch('./php/logout.php')
             .then(response => {
                 if (response.ok) {
@@ -28,12 +28,12 @@ const addEventToLink = () => {
     });
 
     login.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
+        event.preventDefault();
         showHide(event);
     });
 
     registration.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
+        event.preventDefault();
         showHide(event);
     });
 }

@@ -3,15 +3,14 @@
 include('./database.php');
 session_start();
 
-// Verbindung zur Datenbank herstellen
+// Connect to database
 $conn = openDB();
 
-// Überprüfen, ob das Formular gesendet wurde
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Benutzer aus der Datenbank abrufen (ID und Passwort)
+    // Get userdata
     $stmt = $conn->prepare("SELECT id, password FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -21,9 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_result($user_id, $hashed_password);
         $stmt->fetch();
 
-        // Passwort überprüfen
+        // Check password
         if (password_verify($password, $hashed_password)) {
-            // Anmeldung erfolgreich, Session setzen
+            // Set session variable
             $_SESSION['username'] = $username;
             $_SESSION['user_id'] = $user_id; // Benutzer-ID in der Session speichern
             $_SESSION['message'] = "Anmeldung erfolgreich! Willkommen, " . htmlspecialchars($username) . ".";

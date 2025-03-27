@@ -3,16 +3,15 @@
 include('./database.php');
 session_start();
 
-// Verbindung zur Datenbank herstellen
+// Connect to database
 $conn = openDB();
 
-// Überprüfen, ob das Formular gesendet wurde
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $task_name = $_POST['task_name'];
     $user_id = $_SESSION['user_id'];
 
     if (strlen($task_name) <= 255) {
-        // Aufgabe in die Datenbank einfügen
+        // Add task to DB
         $stmt = $conn->prepare("INSERT INTO tasks (task_name, user_id) VALUES (?, ?)");
         $stmt->bind_param("si", $task_name, $user_id);
 
@@ -31,6 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 
-// Weiterleitung zurück zur Formularseite
+// Redirect to main page after adding task
 header("Location: ./../index.php");
 exit();

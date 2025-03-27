@@ -2,10 +2,9 @@
 include('./database.php');
 session_start();
 
-// Verbindung zur Datenbank herstellen
+// Connect to database
 $conn = openDB();
 
-// Überprüfen, ob das Formular gesendet wurde
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -25,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Passwort hashen
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            // Benutzer in die Datenbank einfügen
+            // Add user to DB
             $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
             $stmt->bind_param("ss", $username, $hashed_password);
 

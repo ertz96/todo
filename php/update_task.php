@@ -2,14 +2,13 @@
 include('./database.php');
 session_start();
 
-// Verbindung zur Datenbank herstellen
+// Connect to database
 $conn = openDB();
 
-// Überprüfen, ob die Aufgabe-ID gesendet wurde
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $task_id = $_POST['task_id'];
 
-    // Status der Aufgabe umschalten
+    // Switch status
     $stmt = $conn->prepare("UPDATE tasks SET status = NOT status WHERE id = ?");
     $stmt->bind_param("i", $task_id);
 
